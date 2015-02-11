@@ -40,6 +40,30 @@ class EditableGridColumn extends CDataColumn
                     }
 		echo $value===null ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value,$this->type);
 	}
+
+        public function renderDataCell($row)
+	{
+		$data=$this->grid->dataProvider->data[$row];
+		$options=$this->htmlOptions;
+		if($this->cssClassExpression!==null)
+		{
+			$class=$this->evaluateExpression($this->cssClassExpression,array('row'=>$row,'data'=>$data));
+			if(!empty($class))
+			{
+				if(isset($options['class']))
+					$options['class'].=' '.$class;
+				else
+					$options['class']=$class;
+			}
+		}
+                $isEditable=!$data->{$this->name}->metaData->columns[$this->name]->autoIncrement;
+                if($isEditable){
+                    $options['class'].=' '.'editable';
+                }
+		echo CHtml::openTag('td',$options);
+		$this->renderDataCellContent($row,$data);
+		echo '</td>';
+	}
 }
 
 ?>

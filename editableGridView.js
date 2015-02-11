@@ -2,7 +2,7 @@
  *
  * @param {jQuery} $
  *
- * @returns {undefined}
+ * @returns {jQuery}
  */
 (function($){
     /**
@@ -26,7 +26,6 @@
                 $table.sendAjax(dataSend);
             });
         });
-
     }
 })(jQuery);
 
