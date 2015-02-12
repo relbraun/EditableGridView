@@ -45,6 +45,7 @@ class EditableGridColumn extends CDataColumn
 	{
 		$data=$this->grid->dataProvider->data[$row];
 		$options=$this->htmlOptions;
+                $isEditable=!$data->metaData->columns[$this->name]->autoIncrement;
 		if($this->cssClassExpression!==null)
 		{
 			$class=$this->evaluateExpression($this->cssClassExpression,array('row'=>$row,'data'=>$data));
@@ -54,12 +55,18 @@ class EditableGridColumn extends CDataColumn
 					$options['class'].=' '.$class;
 				else
 					$options['class']=$class;
+                                if($isEditable){
+                                    $options['class'].=' editable';
+                                }
 			}
+                        else{
+                            if($isEditable){
+                                    $options['class']='editable';
+                                }
+                        }
 		}
-                $isEditable=!$data->{$this->name}->metaData->columns[$this->name]->autoIncrement;
-                if($isEditable){
-                    $options['class'].=' '.'editable';
-                }
+
+
 		echo CHtml::openTag('td',$options);
 		$this->renderDataCellContent($row,$data);
 		echo '</td>';

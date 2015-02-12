@@ -1,6 +1,7 @@
 <?php
 
 Yii::import('zii.widgets.grid.CGridView');
+Yii::import('ext.EditableGridView.EditableGridColumn');
 
 /**
  * Description of EditableGridView
@@ -11,7 +12,7 @@ class EditableGridView extends CGridView
 {
     public function init()
     {
-        parent::init();
+
         if(empty($this->updateSelector))
 			throw new CException(Yii::t('zii','The property updateSelector should be defined.'));
 		if(empty($this->filterSelector))
@@ -44,12 +45,17 @@ class EditableGridView extends CGridView
 			}
 		}
 		$id=$this->getId();
+
 		foreach($this->columns as $i=>$column)
 		{
-			if(is_string($column))
+
+			if(is_string($column)){
 				$column=$this->createDataColumn($column);
+
+                        }
 			else
 			{
+
 				if(!isset($column['class']))
 					$column['class']='EditableGridColumn';
 				$column=Yii::createComponent($column, $this);
@@ -84,9 +90,11 @@ class EditableGridView extends CGridView
         public function registerClientScript()
         {
             parent::registerClientScript();
+            $id=$this->getId();
+
             $cs=Yii::app()->getClientScript();
             $cs->registerScriptFile($this->baseScriptUrl.'/editableGridView.js',CClientScript::POS_END);
-            $cs->registerScript(__CLASS__.'#'.$id,"jQuery('#$id').editableGridView($options);");
+            $cs->registerScript(__CLASS__.'#'.$id,"jQuery('#$id').editableGridView({url:'url'});");
         }
 }
 
