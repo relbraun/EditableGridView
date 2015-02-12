@@ -38,7 +38,9 @@ class EditableGridColumn extends CDataColumn
                         default:
                             break;
                     }
-		echo $value===null ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value,$this->type);
+		$return= $value===null ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value,$this->type);
+                $return.=$input;
+                return $return;
 	}
 
         public function renderDataCell($row)

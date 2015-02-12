@@ -10,6 +10,9 @@ Yii::import('ext.EditableGridView.EditableGridColumn');
  */
 class EditableGridView extends CGridView
 {
+
+    public $ownScriptUri;
+
     public function init()
     {
 
@@ -21,10 +24,12 @@ class EditableGridView extends CGridView
 		if(!isset($this->htmlOptions['class']))
 			$this->htmlOptions['class']='grid-view';
 
+                if($this->baseScriptUrl===null)
+			$this->baseScriptUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('zii.widgets.assets')).'/gridview';
 
-		$this->baseScriptUrl=Yii::app()->getAssetManager()->publish(__DIR__);
+		$this->ownScriptUri=Yii::app()->getAssetManager()->publish(__DIR__);
 
-		$this->cssFile=$this->baseScriptUrl.'/style.css';
+		$this->cssFile=$this->ownScriptUri.'/style.css';
 		Yii::app()->getClientScript()->registerCssFile($this->cssFile);
 
 		$this->initColumns();
@@ -93,7 +98,7 @@ class EditableGridView extends CGridView
             $id=$this->getId();
 
             $cs=Yii::app()->getClientScript();
-            $cs->registerScriptFile($this->baseScriptUrl.'/editableGridView.js',CClientScript::POS_END);
+            $cs->registerScriptFile($this->ownScriptUri.'/editableGridView.js',CClientScript::POS_END);
             $cs->registerScript(__CLASS__.'#'.$id,"jQuery('#$id').editableGridView({url:'url'});");
         }
 }
