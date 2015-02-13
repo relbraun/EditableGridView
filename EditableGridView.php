@@ -13,6 +13,8 @@ class EditableGridView extends CGridView
 
     public $ownScriptUri;
 
+    private $grid_id;
+
     public function init()
     {
 
@@ -20,10 +22,10 @@ class EditableGridView extends CGridView
 			throw new CException(Yii::t('zii','The property updateSelector should be defined.'));
 		if(empty($this->filterSelector))
 			throw new CException(Yii::t('zii','The property filterSelector should be defined.'));
-
+                $this->grid_id = get_class($this->dataProvider->data[0]) . '-editable-grid';
 		if(!isset($this->htmlOptions['class']))
 			$this->htmlOptions['class']='grid-view';
-
+                
                 if($this->baseScriptUrl===null)
 			$this->baseScriptUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('zii.widgets.assets')).'/gridview';
 
@@ -96,11 +98,28 @@ class EditableGridView extends CGridView
         {
             parent::registerClientScript();
             $id=$this->getId();
-
+            //$this->grid_id = get_class($this->dataProvider->data[0]) . '-editable-grid';
             $cs=Yii::app()->getClientScript();
             $cs->registerScriptFile($this->ownScriptUri.'/editableGridView.js',CClientScript::POS_END);
-            $cs->registerScript(__CLASS__.'#'.$id,"jQuery('#$id').editableGridView({url:'url'});");
+            $cs->registerScript(__CLASS__.'#'.$this->grid_id,"jQuery('#$this->grid_id').editableGridView({url:'url'});");
         }
+
+        public function renderItems()
+	{
+		if($this->dataProvider->getItemCount()>0 || $this->showTableOnEmpty)
+		{
+			echo "<table class=\"{$this->itemsCssClass}\" id=\"{$this->grid_id}\">\n";
+			$this->renderTableHeader();
+			ob_start();
+			$this->renderTableBody();
+			$body=ob_get_clean();
+			$this->renderTableFooter();
+			echo $body; // TFOOT must appear before TBODY according to the standard.
+			echo "</table>";
+		}
+		else
+			$this->renderEmptyText();
+	}
 }
 
 ?>

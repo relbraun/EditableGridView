@@ -38,7 +38,9 @@ class EditableGridColumn extends CDataColumn
                         default:
                             break;
                     }
-		$return= $value===null ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value,$this->type);
+                    $return = '<span>';
+		$return.= $value===null ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value,$this->type);
+                $return .= '</span>';
                 $return.=$input;
                 return $return;
 	}
@@ -67,10 +69,15 @@ class EditableGridColumn extends CDataColumn
                                 }
                         }
 		}
+                else{
+                            if($isEditable){
+                                    $options['class']='editable';
+                                }
+                        }
 
 
 		echo CHtml::openTag('td',$options);
-		$this->renderDataCellContent($row,$data);
+		echo $this->renderDataCellContent($row,$data);
 		echo '</td>';
 	}
 }
