@@ -4,7 +4,7 @@ Yii::import('zii.widgets.grid.CGridView');
 Yii::import('ext.EditableGridView.EditableGridColumn');
 
 /**
- * Enable you to create editable grid that is updated by-the-way using AJAX requests.
+ * Enable you to create editable grid that it beeing updated at real time using AJAX requests.
  * in order to make it working you have to configure it in the main.php config file and
  * put the following content:
  * <pre>
