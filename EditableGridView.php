@@ -4,7 +4,16 @@ Yii::import('zii.widgets.grid.CGridView');
 Yii::import('ext.EditableGridView.EditableGridColumn');
 
 /**
- * Description of EditableGridView
+ * Enable you to create editable grid that is updated by-the-way using AJAX requests.
+ * in order to make it working you have to configure it in the main.php config file and
+ * put the following content:
+ * <pre>
+ * 'controllerMap' => array(
+            'editableGrid' => 'ext.EditableGridView.EditableGridController'
+        ),
+ * </pre>
+ *
+ * Good luck!
  *
  * @author Kalman
  */
@@ -13,10 +22,16 @@ class EditableGridView extends CGridView
 
     public $ownScriptUri;
 
+    public $action = 'ajaxUpdate';
+
     private $grid_id;
+
+    public $defaultController = 'editableGrid';
 
     public function init()
     {
+        Yii::setPathOfAlias('EGV',__DIR__);
+        Yii::app()->controllerMap['editableGrid']='EGV.EditableGridController';
 
         if(empty($this->updateSelector))
 			throw new CException(Yii::t('zii','The property updateSelector should be defined.'));
@@ -25,7 +40,7 @@ class EditableGridView extends CGridView
                 $this->grid_id = get_class($this->dataProvider->data[0]) . '-editable-grid';
 		if(!isset($this->htmlOptions['class']))
 			$this->htmlOptions['class']='grid-view';
-                
+
                 if($this->baseScriptUrl===null)
 			$this->baseScriptUrl=Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('zii.widgets.assets')).'/gridview';
 
@@ -98,17 +113,18 @@ class EditableGridView extends CGridView
         {
             parent::registerClientScript();
             $id=$this->getId();
-            //$this->grid_id = get_class($this->dataProvider->data[0]) . '-editable-grid';
+            $ajaxUrl = Yii::app()->controller->createUrl($this->defaultController. '/'.$this->action);
             $cs=Yii::app()->getClientScript();
             $cs->registerScriptFile($this->ownScriptUri.'/editableGridView.js',CClientScript::POS_END);
-            $cs->registerScript(__CLASS__.'#'.$this->grid_id,"jQuery('#$this->grid_id').editableGridView({url:'url'});");
+            $cs->registerScript(__CLASS__.'#'.$this->grid_id,"jQuery('#$this->grid_id').editableGridView({url:'$ajaxUrl'});");
         }
 
         public function renderItems()
 	{
 		if($this->dataProvider->getItemCount()>0 || $this->showTableOnEmpty)
 		{
-			echo "<table class=\"{$this->itemsCssClass}\" id=\"{$this->grid_id}\">\n";
+                    $model = get_class($this->dataProvider->data[0]);
+			echo "<table class=\"{$this->itemsCssClass}\" id=\"{$this->grid_id}\" data-model='{$model}'>\n";
 			$this->renderTableHeader();
 			ob_start();
 			$this->renderTableBody();
