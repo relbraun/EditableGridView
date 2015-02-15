@@ -23,6 +23,9 @@ class EditableGridColumn extends CDataColumn
         protected function renderDataCellContent($row,$data)
 	{
             $id=$data->primaryKey;
+        if($this->dropDownData !==array()){
+            $this->dropDownData = $this->evaluateExpression($this->dropDownData,array('data'=>$data,'row'=>$row));
+        }
 		if($this->value!==null)
 			$value=$this->evaluateExpression($this->value,array('data'=>$data,'row'=>$row));
 		else if($this->name!==null)
