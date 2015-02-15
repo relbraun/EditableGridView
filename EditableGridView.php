@@ -28,7 +28,7 @@ Yii::import('ext.EditableGridView.EditableGridColumn');
  *         array(            // display 'create_time' using an expression and make it not-editabled
  *             'name'=>'create_time',
  *             'value'=>'date("M j, Y", $data->create_time)',
- *             'editable'=>'false',
+ *             'editable'=>false,
  *         ),
  *         array(            // display 'author.username' using an expression
  *             'name'=>'authorName',
