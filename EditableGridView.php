@@ -25,9 +25,10 @@ Yii::import('ext.EditableGridView.EditableGridColumn');
  *         'title',          // display the 'title' attribute
  *         'category.name',  // display the 'name' attribute of the 'category' relation
  *         'content:html',   // display the 'content' attribute as purified HTML
- *         array(            // display 'create_time' using an expression
+ *         array(            // display 'create_time' using an expression and make it not-editabled
  *             'name'=>'create_time',
  *             'value'=>'date("M j, Y", $data->create_time)',
+ *             'editable'=>'false',
  *         ),
  *         array(            // display 'author.username' using an expression
  *             'name'=>'authorName',
