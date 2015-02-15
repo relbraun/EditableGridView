@@ -20,3 +20,40 @@ table.editable-grid tbody td input,table.editable-grid tbody td select{
 table.editable-grid tbody td input.show,table.editable-grid tbody td select.show{
     display: block;
 }
+#editable-grid-modal{
+    display: none;
+    position: absolute;
+    top: 30%;
+    width: 30%;
+    left:35%;
+    border-radius: 5px;
+    border: 1px solid black;
+
+}
+#editable-grid-modal.show{
+    display: block;
+}
+#editable-grid-modal.error{
+    background-color: lightpink;
+    border-color: red;
+    color: red;
+}
+#editable-grid-modal .glyphicon{
+    font-size: 12px;
+}
+#editable-grid-modal h4{
+    font-size: 120%;
+    text-align: center;
+    font-weight: 600;
+}
+#editable-grid-modal div{
+    margin: 10px;
+}
+#editable-grid-modal .close{
+    position: absolute;
+    right: 1px;
+    margin-top: 2px;
+}
+.error .glyphicon{
+    color: red;
+}

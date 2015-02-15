@@ -12,6 +12,10 @@
     $.fn.editableGridView = function(args){
         this.addClass('editable-grid');
         this.model=this.data('model');
+        this.errorModal=$('#editable-grid-modal .msg-zone');
+        $('#editable-grid-modal').children('.close').click(function(){
+            $(this).parent().removeClass('show');
+        });
         var $table = this;
         var $fields = this.find('td.editable select,td.editable input');
         $fields.on('focusout',function(e){
@@ -38,6 +42,15 @@
                 if(json.status===1){
                     $(el).removeClass('show');
                     $(el).siblings('span').html($(el).val());
+                }
+                else if(json.status===0){
+                    var msg,title = '';
+                    $.each(json.message,function(k,v){
+                        title=$('<h4>'+k+'</h4>');
+                        msg=$('<div class="error">'+v.join('\n')+'</div>');
+                        $table.errorModal.empty().append(title).append(msg);
+                        $table.errorModal.parent().addClass('show error');
+                    });
                 }
             });
         };

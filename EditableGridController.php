@@ -26,7 +26,8 @@ class EditableGridController extends CController
                     $msg = array('status'=>1 , 'message' => $this->successMsg);
                 }
                 else{
-                    $this->errorMsg = $model->errors[0]->message;
+
+                    $this->errorMsg =($model->errors);
                     $msg = array('status'=>0 , 'message' => $this->errorMsg);
                 }
 
