@@ -65,8 +65,8 @@ class EditableGridView extends CGridView
     public function init()
     {
         Yii::setPathOfAlias('EGV',__DIR__);
-        Yii::app()->controllerMap['editableGrid']='EGV.EditableGridController';
 
+        $this->checkForController();
         if(empty($this->updateSelector))
 			throw new CException(Yii::t('zii','The property updateSelector should be defined.'));
 		if(empty($this->filterSelector))
@@ -171,6 +171,25 @@ class EditableGridView extends CGridView
 		else
 			$this->renderEmptyText();
 	}
+
+        protected function checkForController()
+        {
+            if(!isset(Yii::app()->controllerMap['editableGrid'])){
+                echo "<div class=\"alert alert-danger\" role=\"alert\">
+                    <span>You forgot to put the following code in the <code>main.php</code> file</span>";
+                $this->controller->beginWidget('CTextHighlighter',array(
+                    'language'=>'php',
+                    'showLineNumbers'=>false,
+                    )); ?>
+                    'controllerMap' => array(
+                        'editableGrid' => 'ext.EditableGridView.EditableGridController'
+                    ),
+               <?php $this->controller->endWidget();
+
+                   echo "</div>";
+            }
+            return false;
+        }
 }
 
 ?>
