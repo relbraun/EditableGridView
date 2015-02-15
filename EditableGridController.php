@@ -21,7 +21,7 @@ class EditableGridController extends CController
         {
             if(isset($_POST['id'],$_POST['model'],$_POST[$_POST['model']])){
                 $model=$this->loadModel($_POST['model'],$_POST['id']);
-                $model->attributes=$_POST['Post'];
+                $model->attributes=$_POST[$_POST['model']];
                 if($model->save()){
                     $msg = array('status'=>1 , 'message' => $this->successMsg);
                 }
