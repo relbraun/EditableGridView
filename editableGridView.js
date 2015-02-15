@@ -41,8 +41,13 @@
                    json=$.parseJSON(json);
                }
                 if(json.status===1){
-                    $(el).removeClass('show');
-                    $(el).siblings('span').html($(el).val());
+                    var $el=$(el);
+                    $el.removeClass('show');
+                    if($el.is('input:text'))
+                        $el.siblings('span').html($el.val());
+                    else if($el.is('select')){
+                        $el.siblings('span').html($el.filter('option:selected').text());
+                    }
                 }
                 else if(json.status===0){
                     var msg,title = '';
