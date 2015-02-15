@@ -17,6 +17,8 @@ class EditableGridColumn extends CDataColumn
 
     public $dropDownData = array();
 
+    public $editable = true;
+
 
         protected function renderDataCellContent($row,$data)
 	{
@@ -59,18 +61,18 @@ class EditableGridColumn extends CDataColumn
 					$options['class'].=' '.$class;
 				else
 					$options['class']=$class;
-                                if($isEditable){
+                                if($isEditable && $this->editable){
                                     $options['class'].=' editable';
                                 }
 			}
                         else{
-                            if($isEditable){
+                            if($isEditable && $this->editable){
                                     $options['class']='editable';
                                 }
                         }
 		}
                 else{
-                            if($isEditable){
+                            if($isEditable && $this->editable){
                                     $options['class']='editable';
                                 }
                         }
