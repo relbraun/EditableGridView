@@ -13,6 +13,39 @@ Yii::import('ext.EditableGridView.EditableGridColumn');
         ),
  * </pre>
  *
+ * The using is like this:
+ *
+ * <pre>
+ * $this->widget('ext.EditableGridView.EditableGridView', array(
+ *     'dataProvider'=>$dataProvider,
+ *     'ownScriptUri'=>'url/to/scipt.js', //optional
+ *     'action'=>'action name' //optional
+ *     'defaultController'=>'some controller' //optional
+ *     'columns'=>array(
+ *         'title',          // display the 'title' attribute
+ *         'category.name',  // display the 'name' attribute of the 'category' relation
+ *         'content:html',   // display the 'content' attribute as purified HTML
+ *         array(            // display 'create_time' using an expression
+ *             'name'=>'create_time',
+ *             'value'=>'date("M j, Y", $data->create_time)',
+ *         ),
+ *         array(            // display 'author.username' using an expression
+ *             'name'=>'authorName',
+ *
+ *             'value'=>'$data->author->username',
+ *         ),
+ *          array(            // display dropdown list with data using function
+ *             'name'=>'category',
+ *             'field_type'=>'dropdown',
+ *             'dropDownData'=>'$data->listCategory()',
+ *         ),
+ *         array(            // display a column with "view", "update" and "delete" buttons
+ *             'class'=>'CButtonColumn',
+ *         ),
+ *     ),
+ * ));
+ *
+ * </pre>
  * Good luck!
  *
  * @author Kalman
