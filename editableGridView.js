@@ -9,6 +9,7 @@
      *
      * @param {object} args {url: url}
      */
+
     $.fn.editableGridView = function(args){
         this.addClass('editable-grid');
         this.model=this.data('model');
@@ -52,7 +53,7 @@
                         $table.errorModal.parent().addClass('show error');
                     });
                 }
-            });
+            },'json');
         };
         this.$cells=this.find('tbody td.editable');
         this.$cells.on('click', function(e){
