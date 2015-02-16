@@ -53,6 +53,9 @@ table.editable-grid tbody td input.show,table.editable-grid tbody td select.show
     position: absolute;
     right: 1px;
     margin-top: 2px;
+    width: 12px;
+    height: 12px;
+    background: url('x.png');
 }
 .error .glyphicon{
     color: red;

@@ -166,7 +166,7 @@ class EditableGridView extends CGridView
 			$this->renderTableFooter();
 			echo $body; // TFOOT must appear before TBODY according to the standard.
 			echo "</table>";
-                        echo '<div id="editable-grid-modal"><div class="close"><span class="glyphicon glyphicon-remove-sign"></span></div><div class="msg-zone"></div></div>';
+                        echo '<div id="editable-grid-modal"><div class="close"><img src="'.$this->ownScriptUri.'/x.png" width="12px" height="12px"/></div><div class="msg-zone"></div></div>';
 		}
 		else
 			$this->renderEmptyText();
